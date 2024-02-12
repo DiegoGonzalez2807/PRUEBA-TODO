@@ -34,7 +34,6 @@ def signin(page: ft.Page, params: Params, basket: Basket):
                     )
                 )
             file_picker.upload(upload_list)
-        visible_image()
 
     file_picker = ft.FilePicker(on_result= upload_files)
 
