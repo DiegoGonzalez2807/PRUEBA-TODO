@@ -16,35 +16,29 @@ def signin(page: ft.Page, params: Params, basket: Basket):
     password_field = ft.TextField(label="Contraseña", width=300)
 
 
-    #--- IMAGEN
-    img_avatar = ft.Image(
-        src=f"photos/{username_field.value}.jpg",
-        width=100,
-        height=100,
-        visible=False,
-        fit=ft.ImageFit.CONTAIN,
-    )
+   
 
-    page.add(img_avatar)
     #----- CREACION DE FILEPICKER -----
     
 
-    def visible_image():
-        img_avatar.src = f"photos/{username_field.value}.jpg"
-        img_avatar.visible = True
-        page.update()
+    
 
     def upload_files(e:ft.FilePickerResultEvent):
-        for x in e.files:
-            if not os.path.exists("photos"):
-                os.makedirs("photos")
-            shutil.copy(str(x.path), f"photos/{username_field.value}.jpg")
+        upload_list = []
+        if file_picker.result != None and file_picker.result.files != None:
+            for f in file_picker.result.files:
+                upload_list.append(
+                    ft.FilePickerUploadFile(
+                        f.name,
+                        upload_url=page.get_upload_url(f"{username_field.value}.jpg", 600),
+                    )
+                )
+            file_picker.upload(upload_list)
         visible_image()
-        
-
 
     file_picker = ft.FilePicker(on_result= upload_files)
-    page.overlay.append(file_picker)
+
+    page.overlay.append(file_picker)   
 
     #----- TERMINACION FILE PICKER
 
@@ -108,9 +102,8 @@ def signin(page: ft.Page, params: Params, basket: Basket):
                     ),
                     username_field,
                     password_field,
-                    img_avatar,
                     ft.Container(
-                        content=ft.ElevatedButton("Seleccionar Archivos", on_click=lambda _: file_picker.pick_files(allow_multiple=True)),
+                        content=ft.ElevatedButton("Seleccionar Foto", on_click=lambda _: file_picker.pick_files(allow_multiple=True)),
                         margin=10,
                         alignment=ft.alignment.center,
                         width=300,

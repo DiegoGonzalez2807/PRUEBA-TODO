@@ -17,14 +17,12 @@ def gestion(page: ft.Page, params: Params, basket: Basket):
 
     #-- CREACION DE IMAGE
     img = ft.Image(
-                                src=f"photos/{user_name}.jpg",
+                                src=f"./uploads/{user_name}.jpg",
                                 width=100,
                                 height=100,
                                 visible=True,
                                 fit=ft.ImageFit.CONTAIN,
                             )
-    if not os.path.isfile(f"photos/{user_name}.jpg"):
-        img.src = f"photos/default_avatar.jpg"
 
     def change_route(param1):
         if param1 == 0:

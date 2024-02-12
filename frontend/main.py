@@ -41,4 +41,4 @@ def main(page: ft.Page):
         )
      page.go(page.route)
 
-ft.app(port=8080,target=main, upload_dir="uploads")
+ft.app(port=8080,target=main, assets_dir="assets", upload_dir="assets/uploads", view=ft.AppView.WEB_BROWSER)
